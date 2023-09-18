@@ -25,7 +25,11 @@ pipeline {
             }
         }
         
-        
+       stage('TRIVY FS SCAN') {
+            steps {
+                sh "trivy fs ."
+            }
+        } 
         
         stage('SONARQUBE ANALYSIS') {
             steps {
