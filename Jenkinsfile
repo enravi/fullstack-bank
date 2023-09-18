@@ -27,6 +27,7 @@ pipeline {
         
        stage('TRIVY FS SCAN') {
             steps {
+                PATH = "/usr/bin:$PATH"
                 sh "trivy fs ."
             }
         } 
