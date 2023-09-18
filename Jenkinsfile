@@ -25,12 +25,18 @@ pipeline {
             }
         }
         
-       stage('TRIVY FS SCAN') {
-            steps {
-                PATH = "/usr/bin:$PATH"
-                sh "trivy fs ."
-            }
-        } 
+      stage('TRIVY FS SCAN') {
+    steps {
+        script {
+            // Set the PATH environment variable to include the path to the Trivy executable
+            def trivyPath = tool name: 'Trivy', type: 'Tool'
+            env.PATH = "${trivyPath}:${env.PATH}"
+
+            // Run Trivy to scan the current directory
+            sh "trivy fs ."
+        }
+    }
+}
         
         stage('SONARQUBE ANALYSIS') {
             steps {
